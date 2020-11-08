@@ -1,0 +1,64 @@
+/* Remove unnecessary margins/padding */
+html, body {
+  margin: 0;
+  padding: 0
+}
+
+.app-wrapper {
+  display: grid;
+  grid-template-areas:
+    "header header header"
+    "empty_left content empty_right";
+  grid-template-rows: 0 auto;
+  grid-template-columns: 1fr 4fr 1fr;
+  min-height: 100vh;
+}
+
+.app-header {
+  grid-area: header;
+
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f5f5f5;
+  display: flex;
+  height: auto;
+  min-height: 55px;
+  align-items: flex-end;
+  margin-left: 0;
+  padding: 11px 20px 5px 40px;
+}
+
+.app-logo {
+  width: 40px;
+  max-height: 100% !important;
+}
+
+.app-title-page {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+:root {
+  --header-height: calc(1rem * 1.5 + 1rem * 2);
+}
+
+.app-content {
+  grid-area: content;
+  /*background-color: #99BB5E;*/
+}
+
+:root {
+  --footer-height: calc(.8rem * 1.5 + .5rem * 2);
+}
+
+.app-sticky-content {
+  position: sticky;
+  box-sizing: border-box;
+
+  --padding: 50px;
+  padding: calc(var(--header-height) + var(--padding)) var(--padding) var(--padding);
+  margin-top: calc(0px - var(--header-height));
+}
+
