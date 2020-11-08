@@ -46,11 +46,6 @@ html, body {
 
 .app-content {
   grid-area: content;
-  /*background-color: #99BB5E;*/
-}
-
-:root {
-  --footer-height: calc(.8rem * 1.5 + .5rem * 2);
 }
 
 .app-sticky-content {

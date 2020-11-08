@@ -15,7 +15,6 @@ function App() {
           <Categories/>
         </div>
       </div>
-      {/*<div className="footer">Footer (Absolute)</div>*/}
     </div>
   );
 }

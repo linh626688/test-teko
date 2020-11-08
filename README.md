@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+#  Hiring Test - Software Engineer (Front-end) 
+##  Catalog Application 
+
+This is a simple page using the following technologies
+- JavaScript Framework: ReactJS
+- HTML/CSS
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Requirements
+Need Node.js installed on your environement.
 
-In the project directory, you can run:
+### Node
+    $ node --version
+    v12.16.3
 
-### `yarn start`
+    $ npm --version
+    6.14.6
+    
+## Install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    $ cd PROJECT
+    $ npm install
+    
+## Start & watch
+    $ npm start
+    
+    Runs the app in the development mode.
+    Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Languages & dependencies
+### JavaScript
+- [React](http://facebook.github.io/react) is used for UI.
+### Dependencies
+- [Bootstrap](https://getbootstrap.com/)  CSS framework base
+- [react-paginate](https://github.com/AdeleD/react-paginate) A ReactJS component that creates a pagination
+  
+##Explain main function
+ * function```executeSearch```, have 5 steps: 
+     - step 1: create 2 Map `invertedIndex` and `idToRecord`
+        - invertedIndex:  contain all words in data name 
+                Eg
+                      ```
+                             {
+                              "acer": [123,124], 
+                              "laptop": [123, 126],
+                                ...
+                             } 
+                             ```
+        - idToRecord: Object with structure 
+                      ```
+                             { 
+                              "123": product_1, 
+                              "125": product_2,
+                               ...
+                             } 
+                        ```
+     
+     - Step 2: split and lowerCase searchTerms to ```recordIds```. E.g: "aCer LapToP" => searchTerms = [acer, laptop]
+     - Step 3: execute the loop to search(searchTerms): use the ```invertedIndex``` to get all matching recordIds
+        Output is with searchTerms `laptop acer` : 
+                     ```
+                        {
+                            "acer": 123, 124, 126,
+                            "laptop": 123, 124, 125
+                        }
+                    ```
+     - Step 4: Merge value of item with keys `acer` and `laptop`. Result is `foundRecordIds` : [123,124]
+     - Step 5: We have arrays `foundRecordIds`, use `idToRecord` to get list `foundRecords`
+       
+    - Result is **foundRecords**   
+    
+###Performant: 
+ -  Convert Arrays to Map to decrease time complexity (form `O(n)` to `0(1)`)
+ -  Limit or avoid loop in loop
+ -  With case loop in a loop with searchTerms: the searchTerms is short array (from input user, split by white space ` ` ), it is not impacted too much to performant.
+ -  User custom hook ```useDebounce``` to avoid execute too frequently function `executeSearch`. It's not necessary. Debounce will delay 500ms to execute search when user typing.
+ 
+###Cons
+ - Performant is bad when apply paging in client side, using `[...products].splice(argument)` with very large data is take up a lot of resources,
+ - With very large data, need better the solution (split data search, move handle search to server,...)
