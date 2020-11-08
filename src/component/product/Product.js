@@ -14,7 +14,7 @@ const priceStyle = {fontWeight : 400, color: 'red'};
 function Product({data, highlights}) {
   return (
     <div className="card">
-      <img className="card-img-top" src={data.imageUrl} alt="Card image cap"/>
+      <img className="card-img-top" src={data.imageUrl} alt={data.id}/>
       <div className="card-body">
         <div className="card-text"><p dangerouslySetInnerHTML={{__html: renderHighLightString(data.name, highlights)}}/>
         </div>

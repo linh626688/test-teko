@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {large_data} from "../../utils/data";
 import Pagination from "../../component/pagination/Pagination";
 import Product from "../../component/product/Product";
+import useDebounce from "../../utils/useDebounce";
 import "./Categories.css"
 
 const executeSearch = (searchText, allRecords) => {
@@ -61,19 +62,30 @@ function Categories() {
   const [paginatedProducts, setPaginatedProducts] = useState([]);
   const [textSearch, setTextSearch] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
+  const debouncedSearchTerm = useDebounce(textSearch, 500);
 
   useEffect(() => {
-    setPaginatedProducts([...products].splice(pageIndex * pageSize, pageSize))
+      if (debouncedSearchTerm) {
+        setProducts(executeSearch(debouncedSearchTerm, large_data));
+      } else {
+        setProducts(large_data);
+      }
+    },
+    [debouncedSearchTerm]
+  );
+
+  useEffect(() => {
+    setPaginatedProducts([...products].splice(pageIndex * pageSize, pageSize));
   }, [products, pageIndex])
 
   const handleChangeText = e => {
     const {value} = e.target;
     setTextSearch(value);
     setPageIndex(0);
-    setProducts(executeSearch(value, large_data));
   }
+
   const handlePageChange = e => {
-    setPageIndex(e.selected)
+    setPageIndex(e.selected);
   }
 
   return (
