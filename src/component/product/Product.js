@@ -9,11 +9,18 @@ const renderHighLightString = (name, searchText) => {
   return name.replace(pattern, match => `<mark>${match}</mark>`)
 
 }
+const priceStyle = {fontWeight : 400, color: 'red'};
 
 function Product({data, highlights}) {
   return (
-    <div>
-      {data.id} --- <p dangerouslySetInnerHTML={{__html: renderHighLightString(data.name, highlights)}}/>
+    <div className="card">
+      <img className="card-img-top" src={data.imageUrl} alt="Card image cap"/>
+      <div className="card-body">
+        <div className="card-text"><p dangerouslySetInnerHTML={{__html: renderHighLightString(data.name, highlights)}}/>
+        </div>
+        <div style={priceStyle}>$ {data.price}</div>
+      </div>
+
     </div>
   );
 }

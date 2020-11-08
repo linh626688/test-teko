@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {large_data} from "../../utils/data";
 import Pagination from "../../component/pagination/Pagination";
 import Product from "../../component/product/Product";
+import "./Categories.css"
 
 const executeSearch = (searchText, allRecords) => {
   if (!searchText || !searchText.trim()) {
@@ -53,14 +54,13 @@ const executeSearch = (searchText, allRecords) => {
   return foundRecords;
 }
 
-const pageSize = 2;
+const pageSize = 10;
 
 function Categories() {
   const [products, setProducts] = useState(large_data);
   const [paginatedProducts, setPaginatedProducts] = useState([]);
   const [textSearch, setTextSearch] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
-  console.log('pageIndex', pageIndex)
 
   useEffect(() => {
     setPaginatedProducts([...products].splice(pageIndex * pageSize, pageSize))
@@ -69,26 +69,28 @@ function Categories() {
   const handleChangeText = e => {
     const {value} = e.target;
     setTextSearch(value);
+    setPageIndex(0);
     setProducts(executeSearch(value, large_data));
   }
   const handlePageChange = e => {
-    console.log('page change', e)
     setPageIndex(e.selected)
   }
 
-  console.log('paginatedProducts', paginatedProducts)
   return (
-    <div>
-      <input name="input" value={textSearch} onChange={handleChangeText}/>
-      <div>
+    <div className="min-vh-70 pt-3">
+      <div className="text-center">
+        <input name="input" className="w-75" value={textSearch} placeholder="Type to search ..."
+               onChange={handleChangeText}/>
+      </div>
+      <div className="pt-3 pb-3 list-product">
         {paginatedProducts.map((el) => {
           return <Product data={el} key={el.id} highlights={textSearch}/>
         })}
-        <Pagination
-          style={{position: 'absolute', bottom: 0}}
-          pageCount={Math.ceil(products.length / pageSize)}
-          onPageChange={handlePageChange}/>
       </div>
+      {paginatedProducts.length > 0 ? <Pagination
+        pageCount={Math.ceil(products.length / pageSize)}
+        onPageChange={handlePageChange}/> : <div>Not found</div>}
+
     </div>
   );
 }
