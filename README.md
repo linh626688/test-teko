@@ -8,22 +8,22 @@ This is a simple page using the following technologies
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Requirements
-Need Node.js installed on your environement.
+Need Node.js and Yarn installed on your environment.
 
 ### Node
     $ node --version
     v12.16.3
 
-    $ npm --version
-    6.14.6
+    $ yarn --version
+    >=1.22.4
     
 ## Install
 
     $ cd PROJECT
-    $ npm install
+    $ yarn install
     
 ## Start & watch
-    $ npm start
+    $ yarn start
     
     Runs the app in the development mode.
     Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
